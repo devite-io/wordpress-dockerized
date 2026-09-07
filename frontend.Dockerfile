@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # install utilities
-RUN apt update && apt install -y unzip git supervisor cron nano curl apache2
+RUN apt update && apt install -y unzip git supervisor cron nano curl apache2 mysql-client
 
 # install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -43,6 +43,11 @@ RUN usermod -d /var/www www-data \
     && chmod 0777 /var/www
 RUN a2enconf php8.4-fpm
 RUN a2enmod proxy_fcgi rewrite headers expires
+
+# install wp-cli
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 # add entrypoint scripts
 COPY includes/scripts/entrypoint.sh /entrypoint.sh
