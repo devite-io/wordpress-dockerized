@@ -8,9 +8,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt install -y nodejs
 
 # prepare apache for rootless mode
-RUN rm -rf /etc/apache2/sites-available /etc/apache2/sites-enabled /etc/apache2/conf-*/other-vhosts-access-log.conf /var/www/html/*
-RUN mkdir -p /var/run/apache2
-RUN chown -R www-data:www-data /var/cache/apache2 /var/www/html /etc/apache2 /var/run/apache2 \
+RUN rm -rf /etc/apache2/sites-available /etc/apache2/sites-enabled /etc/apache2/conf-*/other-vhosts-access-log.conf /var/www/html/* /var/log/apache2/error.log
+RUN mkdir -p /var/run/apache2 && touch /var/log/apache2/error.log
+RUN chown -R www-data:www-data /var/cache/apache2 /var/www/html /etc/apache2 /var/run/apache2 /var/log/apache2 \
     && chmod -R g+w /var/cache/apache2 /etc/apache2 /var/run/apache2
 
 # install php

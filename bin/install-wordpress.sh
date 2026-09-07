@@ -13,11 +13,11 @@ webRootDir="/var/www/html"
 docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && curl -o wordpress.tar.gz -L https://wordpress.org/latest.tar.gz && tar -xzf wordpress.tar.gz --strip-components=1 && rm wordpress.tar.gz"
 
 # configure database connection
-docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/localhost/database/g' wp-config-sample.php"
-docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/database_name_here/wordpress/g' wp-config-sample.php"
-docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/username_here/wp_user/g' wp-config-sample.php"
-docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/password_here/wp_password/g' wp-config-sample.php"
 docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && cp wp-config-sample.php wp-config.php"
+docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/localhost/database/g' wp-config.php"
+docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/database_name_here/wordpress/g' wp-config.php"
+docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/username_here/wp_user/g' wp-config.php"
+docker exec --user www-data $frontendContainer bash -c "cd $webRootDir && sed -i 's/password_here/wp_password/g' wp-config.php"
 
 # set secret keys and salts
 saltKeys=$(curl -s https://api.wordpress.org/secret-key/1.1/salt/)
